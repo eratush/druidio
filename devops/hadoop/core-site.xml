@@ -1,0 +1,51 @@
+<configuration>
+
+    <!-- Temporary directory on HDFS (but also sometimes local!) -->
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/mnt/persistent/hadoop</value>
+    </property>
+
+    <!-- S3 -->
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://localhost:9000</value>
+    </property>
+    <property>
+        <name>fs.s3.impl</name>
+        <value>org.apache.hadoop.fs.s3native.NativeS3FileSystem</value>
+    </property>
+    <property>
+        <name>fs.s3.awsAccessKeyId</name>
+        <value>AKIAJUJVSAQCIZG4CPCA</value>
+    </property>
+    <property>
+        <name>fs.s3.awsSecretAccessKey</name>
+        <value>ezLY5vemL4QVzIy/n46lMyMu7vAUg0+lw3kEVhmw</value>
+    </property>
+    <property>
+        <name>fs.s3.buffer.dir</name>
+        <value>/mnt/persistent/hadoop-s3n</value>
+    </property>
+    <property>
+        <name>fs.s3n.awsAccessKeyId</name>
+        <value>AKIAJUJVSAQCIZG4CPCA</value>
+    </property>
+    <property>
+        <name>fs.s3n.awsSecretAccessKey</name>
+        <value>ezLY5vemL4QVzIy/n46lMyMu7vAUg0+lw3kEVhmw</value>
+    </property>
+
+    <!-- Compression -->
+    <property>
+        <name>io.compression.codecs</name>
+        <value>org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.Lz4Codec,org.apache.hadoop.io.compress.BZip2Codec,org.apache.hadoop.io.compress.SnappyCodec</value>
+    </property>
+
+    <!-- JBOD -->
+    <property>
+        <name>io.seqfile.local.dir</name>
+        <value>/mnt/persistent/hadoop/io/local</value>
+    </property>
+
+</configuration>

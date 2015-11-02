@@ -1,0 +1,87 @@
+{
+  "dataSchema" : {
+    "dataSource" : "rentrak-data-sample",
+    "parser" : {
+      "type" : "string",
+      "parseSpec" : {
+        "format" : "csv",
+        "timestampSpec" : {
+          "column" : "view_date",
+          "format" : "auto"
+        },
+        "columns" : ["rentrak_id","ad_duration","advertiser","category","brand","product","ad_copy","network","series","daypart", "view_date"],
+        "dimensionsSpec" : {
+          "dimensions": ["rentrak_id","ad_duration","advertiser","category","brand","product","ad_copy","network","series","daypart"],
+          "dimensionExclusions" : [],
+          "spatialDimensions" : []
+        }
+      }
+    },
+    "metricsSpec" : [
+      {
+        "type" : "count",
+        "name" : "count"
+      },
+      {
+        "type" : "doubleSum",
+        "name" : "added",
+        "fieldName" : "added"
+      },
+      {
+        "type" : "doubleSum",
+        "name" : "deleted",
+        "fieldName" : "deleted"
+      },
+      {
+        "type" : "doubleSum",
+        "name" : "delta",
+        "fieldName" : "delta"
+      }
+    ],
+    "granularitySpec" : {
+      "type" : "uniform",
+      "segmentGranularity" : "DAY",
+      "queryGranularity" : "NONE",
+      "intervals" : [ "2013-08-31/2019-09-01" ]
+    }
+  },
+  "ioConfig" : {
+    "type" : "hadoop",
+    "inputSpec" : {
+      "type" : "static",
+      "paths" : "s3n://cadreon-dev-aws-logs/amp2/redshift_data/"
+    },
+    "metadataUpdateSpec" : {
+      "type":"mysql",
+      "connectURI" : "jdbc:mysql://druid:3306/druid",
+      "password" : "diurd",
+      "segmentTable" : "druid_segments",
+      "user" : "druid"
+    },
+    "segmentOutputPath" : "/MyDirectory/data/index/output"
+  },
+  "tuningConfig" : {
+    "type" : "hadoop",
+    "workingPath": "/tmp",
+    "partitionsSpec" : {
+      "type" : "dimension",
+      "partitionDimension" : null,
+      "targetPartitionSize" : 5000000,
+      "maxPartitionSize" : 7500000,
+      "assumeGrouped" : false,
+      "numShards" : -1
+    },
+    "shardSpecs" : { },
+    "leaveIntermediate" : false,
+    "cleanupOnFailure" : true,
+    "overwriteFiles" : false,
+    "ignoreInvalidRows" : false,
+    "jobProperties" : { },
+    "combineText" : false,
+    "persistInHeap" : false,
+    "ingestOffheap" : false,
+    "bufferSize" : 134217728,
+    "aggregationBufferRatio" : 0.5,
+    "rowFlushBoundary" : 300000
+  }
+}
